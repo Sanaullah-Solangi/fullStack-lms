@@ -1,5 +1,9 @@
 {
+  "parser": "@babel/eslint-parser",
+  "parserOptions": {
+    "requireConfigFile": false
+  },
   "rules": {
-    "react/no-unescaped-entities": "off"
+    // your rules here
   }
 }
