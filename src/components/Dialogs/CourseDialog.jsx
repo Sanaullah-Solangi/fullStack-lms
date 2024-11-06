@@ -32,6 +32,7 @@ import {
 } from "@/components/ui/drawer";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { addCourse } from "@/app/actions/courses";
 
 export function CourseDialog() {
   const [open, setOpen] = useState(false);
@@ -81,30 +82,43 @@ export function CourseDialog() {
 
 function ProfileForm({ className }) {
   return (
-    <form className={cn("grid items-start gap-4", className)}>
+    <form
+      action={addCourse}
+      className={cn("grid items-start gap-4", className)}
+    >
+      {/* TITLE */}
       <div className="grid gap-2">
         <Label htmlFor="email">Course</Label>
-        <Input type="text" id="course" placeholder="Add Course" />
+        <Input name="title" type="text" id="course" placeholder="Add Course" />
       </div>
+      {/* DESCRIPTION */}
+      <div className="grid gap-2">
+        <Label htmlFor="description">Description</Label>
+        <Input
+          name="description"
+          id="description"
+          placeholder="Add descrption"
+        />
+      </div>
+      {/* DURATION */}
       <div className="grid gap-2">
         <Label htmlFor="duration">Duration</Label>
-        <Input id="duration" placeholder="Add Duration" />
+        <Input name="duration" id="duration" placeholder="Add Duration" />
       </div>
+      {/* ELEGIBLITY */}
       <div className="grid gap-2">
-        <Label htmlFor="descrption">Descrption</Label>
-        <Input id="descrption" placeholder="Add descrption" />
+        <Label htmlFor="eligibility">Eligibility</Label>
+        <Input name="eligibility" id="eligibility" placeholder="Add Duration" />
       </div>
+      {/* THUMBNAIL */}
       <div className="grid gap-2">
-        <Label htmlFor="status">Status</Label>
-        <Select>
-          <SelectTrigger className="">
-            <SelectValue placeholder="Active - Not-Active" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="active">Active</SelectItem>
-            <SelectItem value="not-active">Not Active</SelectItem>
-          </SelectContent>
-        </Select>
+        <Label htmlFor="thumbnail">Thumbnail</Label>
+        <Input
+          type={"url"}
+          name="thumbnail"
+          id="thumbnail"
+          placeholder="Add Duration"
+        />
       </div>
       <Button type="submit">Add Course</Button>
     </form>

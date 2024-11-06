@@ -34,7 +34,7 @@ import {
 } from "@/components/ui/table";
 
 // Sample data
-const data = [
+/*const data = [
   {
     id: "1",
     batchName: "Batch A",
@@ -59,7 +59,7 @@ const data = [
     noOfStudents: 30,
     course: "Python Development",
   },
-];
+];*/
 
 // Define columns
 export const columns = [
@@ -88,7 +88,7 @@ export const columns = [
   },
   // BATCH NAME COL
   {
-    accessorKey: "batchName",
+    accessorKey: "title",
     header: ({ column }) => (
       <Button
         variant="ghost"
@@ -98,7 +98,7 @@ export const columns = [
         <ArrowUpDown className="ml-2 h-4 w-4" />
       </Button>
     ),
-    cell: ({ row }) => <div>{row.getValue("batchName")}</div>,
+    cell: ({ row }) => <div>{row.getValue("title")}</div>,
   },
   // STATUS COL
   {
@@ -108,20 +108,11 @@ export const columns = [
       <div className="capitalize">{row.getValue("status")}</div>
     ),
   },
-  // TRAINER COL
+  // DESCRIPTION COL
   {
-    accessorKey: "trainer",
-    header: "Trainer",
-    cell: ({ row }) => <div>{row.getValue("trainer")}</div>,
-  },
-  // NUM OF STUDENTS
-  {
-    accessorKey: "noOfStudents",
-    header: () => <div className="text-right">No. of Students</div>,
-    cell: ({ row }) => {
-      const students = row.getValue("noOfStudents");
-      return <div className="text-right font-medium">{students}</div>;
-    },
+    accessorKey: "description",
+    header: "description",
+    cell: ({ row }) => <div>{row.getValue("description")}</div>,
   },
   // COURSE
   {
@@ -135,7 +126,7 @@ export const columns = [
         <ArrowUpDown className="ml-2 h-4 w-4" />
       </Button>
     ),
-    cell: ({ row }) => <div>{row.getValue("course")}</div>,
+    cell: ({ row }) => <div>{row.getValue("course")?.title}</div>,
   },
   // DROPDOWN ACTIONS
   {
@@ -170,7 +161,7 @@ export const columns = [
 ];
 
 // BatchesTable component
-export function BatchesTable() {
+export function BatchesTable({ data }) {
   const [sorting, setSorting] = useState([]);
   const [columnFilters, setColumnFilters] = useState([]);
   const [columnVisibility, setColumnVisibility] = useState({});
@@ -200,9 +191,9 @@ export function BatchesTable() {
       <div className="flex items-center py-4">
         <Input
           placeholder="Filter by Batch Name..."
-          value={table.getColumn("batchName")?.getFilterValue() ?? ""}
+          value={table.getColumn("title")?.getFilterValue() ?? ""}
           onChange={(event) =>
-            table.getColumn("batchName")?.setFilterValue(event.target.value)
+            table.getColumn("title")?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
         />

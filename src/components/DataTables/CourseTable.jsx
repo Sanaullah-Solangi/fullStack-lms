@@ -32,33 +32,35 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import Image from "next/image";
 
-const data = [
-  {
-    id: "m5gr84i9",
-    course: "Web Development",
-    status: "active",
-    duration: "1 year",
-    descrption: "We learn Web Development at Saylani",
-  },
-  {
-    id: "3u1reuv4",
-    course: "App Development",
-    status: "active",
-    duration: "1 year",
-    descrption:
-      "We will learn App Development Also inshallah after current course",
-  },
-  {
-    id: "derv1ws0",
-    course: "Python",
-    status: "processing",
-    duration: "1 year",
-    descrption: "Saylani teaches Python Programming Also",
-  },
-];
+// const data = [
+//   {
+//     id: "m5gr84i9",
+//     title: "Web Development",
+//     status: "active",
+//     duration: "1 year",
+//     descrption: "We learn Web Development at Saylani",
+//   },
+//   {
+//     id: "3u1reuv4",
+//     course: "App Development",
+//     status: "active",
+//     duration: "1 year",
+//     descrption:
+//       "We will learn App Development Also inshallah after current course",
+//   },
+//   {
+//     id: "derv1ws0",
+//     course: "Python",
+//     status: "processing",
+//     duration: "1 year",
+//     descrption: "Saylani teaches Python Programming Also",
+//   },
+// ];
 
 export const columns = [
+  // SELECT INPUT
   {
     id: "select",
     header: ({ table }) => (
@@ -81,48 +83,65 @@ export const columns = [
     enableSorting: false,
     enableHiding: false,
   },
+  // THUNBNAIL KEY
   {
-    accessorKey: "status",
-    header: "Status",
-    cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("status")}</div>
-    ),
-  },
-  {
-    accessorKey: "course",
+    accessorKey: "thumbnail",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Course
+          Thumbnail
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
     cell: ({ row }) => (
-      <div className="uppercase">{row.getValue("course")}</div>
+      <Image
+        src={row.getValue("thumbnail")}
+        width={100}
+        height={100}
+        alt="course thumbnail"
+        className="rounded-md"
+      />
     ),
   },
+  // TITLE KEY
   {
-    accessorKey: "descrption",
+    accessorKey: "title",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          descrption
+          Title
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => <div className="uppercase">{row.getValue("title")}</div>,
+  },
+  // DESCRIPTION
+  {
+    accessorKey: "description",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Description
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("descrption")}</div>
+      <div className="capitalize">{row.getValue("description")}</div>
     ),
   },
-
+  // DURATION
   {
     accessorKey: "duration",
     header: () => <div className="text-right">Duration</div>,
@@ -132,6 +151,19 @@ export const columns = [
       return <div className="text-right font-medium uppercase">{duration}</div>;
     },
   },
+  // STATUS KEY
+  {
+    accessorKey: "eligibility",
+    header: "Eligibility",
+    cell: ({ row }) => (
+      <div className="capitalize">
+        {row.getValue("eligibility").map((item, index) => (
+          <div key={index}>{item}</div>
+        ))}
+      </div>
+    ),
+  },
+  // ACTIONS
   {
     id: "actions",
     enableHiding: false,
@@ -163,7 +195,7 @@ export const columns = [
   },
 ];
 
-export function CourseTable() {
+export function CourseTable({ data }) {
   const [sorting, setSorting] = useState([]);
   const [columnFilters, setColumnFilters] = useState([]);
   const [columnVisibility, setColumnVisibility] = useState({});
@@ -193,9 +225,9 @@ export function CourseTable() {
       <div className="flex items-center py-4">
         <Input
           placeholder="Filter Course..."
-          value={table.getColumn("course")?.getFilterValue() ?? ""}
+          value={table.getColumn("title")?.getFilterValue() ?? ""}
           onChange={(event) =>
-            table.getColumn("course")?.setFilterValue(event.target.value)
+            table.getColumn("title")?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
         />
