@@ -1,22 +1,21 @@
 import { connectDB } from "@/lib/dbConnect";
-import { courseModel } from "@/lib/Models/CourseModel";
+import { CourseModel } from "@/lib/Models/CourseModel";
 
 export async function POST(request) {
   await connectDB();
   const obj = await request.json();
-  let newCourse = new courseModel({ ...obj });
-  console.log("newCourse=>", newCourse);
+  let newCourse = new CourseModel({ ...obj });
   newCourse = await newCourse.save();
   return Response.json({
     error: false,
     msg: "Course Is Added Successfully",
-    // course: newCourse,
+    course: newCourse,
   });
 }
 
 export async function GET() {
   await connectDB();
-  const courses = await courseModel.find();
+  const courses = await CourseModel.find();
   return Response.json({
     error: false,
     msg: "Courses Are Fetched Successfully",

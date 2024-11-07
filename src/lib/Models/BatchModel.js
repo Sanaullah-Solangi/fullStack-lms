@@ -23,5 +23,5 @@ const batchSchema = new Schema(
   }
 );
 
-export const batchModel =
+export const BatchModel =
   mongoose.models.Batches || mongoose.model("Batches", batchSchema);

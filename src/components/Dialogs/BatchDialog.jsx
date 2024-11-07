@@ -1,5 +1,5 @@
 "use client";
-import * as React from "react";
+import { useState } from "react";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -30,21 +30,8 @@ import {
 } from "@/components/ui/select";
 import { addBatche } from "@/app/actions/batches";
 
-// Mock data for Trainers and Courses
-const trainers = [
-  { id: "trainer1", name: "John Doe" },
-  { id: "trainer2", name: "Jane Smith" },
-  { id: "trainer3", name: "Alice Johnson" },
-];
-
-const courses = [
-  { id: "course1", name: "Web and App Development" },
-  { id: "course2", name: "App Development" },
-  { id: "course3", name: "Python Development" },
-];
-
 export function BatchDialog({ courses }) {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const isDesktop = true;
 
   if (isDesktop) {
@@ -57,7 +44,7 @@ export function BatchDialog({ courses }) {
           <DialogHeader>
             <DialogTitle>Add Batch</DialogTitle>
           </DialogHeader>
-          <BatchForm courses={courses} />
+          <BatchForm courses={courses} state={open} setState={setOpen} />
         </DialogContent>
       </Dialog>
     );
@@ -83,11 +70,13 @@ export function BatchDialog({ courses }) {
   );
 }
 
-function BatchForm({ className, courses }) {
-  console.log("courses check kro", courses);
+function BatchForm({ className, courses, state, setState }) {
   return (
     <form
-      action={addBatche}
+      action={(formData) => {
+        setState(false);
+        addBatche(formData);
+      }}
       className={cn("grid items-start gap-4", className)}
     >
       {/* Batch Name */}

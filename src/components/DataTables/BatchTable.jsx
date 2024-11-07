@@ -33,34 +33,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-// Sample data
-/*const data = [
-  {
-    id: "1",
-    batchName: "Batch A",
-    status: "ongoing",
-    trainer: "John Doe",
-    noOfStudents: 25,
-    course: "Web and App Development",
-  },
-  {
-    id: "2",
-    batchName: "Batch B",
-    status: "pending",
-    trainer: "Jane Smith",
-    noOfStudents: 20,
-    course: "App Development",
-  },
-  {
-    id: "3",
-    batchName: "Batch C",
-    status: "completed",
-    trainer: "Alice Johnson",
-    noOfStudents: 30,
-    course: "Python Development",
-  },
-];*/
-
 // Define columns
 export const columns = [
   // STATUS COL
@@ -100,20 +72,6 @@ export const columns = [
     ),
     cell: ({ row }) => <div>{row.getValue("title")}</div>,
   },
-  // STATUS COL
-  {
-    accessorKey: "status",
-    header: "Status",
-    cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("status")}</div>
-    ),
-  },
-  // DESCRIPTION COL
-  {
-    accessorKey: "description",
-    header: "description",
-    cell: ({ row }) => <div>{row.getValue("description")}</div>,
-  },
   // COURSE
   {
     accessorKey: "course",
@@ -128,6 +86,21 @@ export const columns = [
     ),
     cell: ({ row }) => <div>{row.getValue("course")?.title}</div>,
   },
+  // STATUS COL
+  {
+    accessorKey: "status",
+    header: "Status",
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("status")}</div>
+    ),
+  },
+  // DESCRIPTION COL
+  {
+    accessorKey: "description",
+    header: "description",
+    cell: ({ row }) => <div>{row.getValue("description")}</div>,
+  },
+
   // DROPDOWN ACTIONS
   {
     id: "actions",

@@ -1,11 +1,11 @@
 import { connectDB } from "@/lib/dbConnect";
-import { batchModel } from "@/lib/Models/BatchModel";
-import { courseModel } from "@/lib/Models/CourseModel";
+import { BatchModel } from "@/lib/Models/BatchModel";
+import { CourseModel } from "@/lib/Models/CourseModel";
 
 export async function POST(request) {
   await connectDB();
   const obj = await request.json();
-  let newBatch = new batchModel({ ...obj });
+  let newBatch = new BatchModel({ ...obj });
   newBatch = await newBatch.save();
 
   return Response.json({
@@ -24,7 +24,7 @@ export async function GET(req) {
     query.course = searchParams.get("course");
   }
 
-  const batches = await batchModel.find(query).populate("course", "title");
+  const batches = await BatchModel.find(query).populate("course", "title");
   return Response.json({
     error: false,
     msg: "Batchs Are Fetched Successfully",

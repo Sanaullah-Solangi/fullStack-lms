@@ -14,5 +14,5 @@ const courseSchema = new Schema(
   }
 );
 
-export const courseModel =
+export const CourseModel =
   mongoose.models.Courses || mongoose.model("Courses", courseSchema);

@@ -23,6 +23,5 @@ export async function addCourse(formData) {
 export async function getCourse() {
   let courses = await fetch(`${process.env.BASE_URL}api/courses`);
   courses = await courses.json();
-  console.log(courses);
   return courses;
 }
