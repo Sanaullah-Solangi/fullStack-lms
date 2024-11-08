@@ -60,7 +60,7 @@ export const columns = [
   },
   // BATCH NAME COL
   {
-    accessorKey: "title",
+    accessorKey: "course",
     header: ({ column }) => (
       <Button
         variant="ghost"
@@ -70,26 +70,21 @@ export const columns = [
         <ArrowUpDown className="ml-2 h-4 w-4" />
       </Button>
     ),
-    cell: ({ row }) => <div>{row.getValue("title")}</div>,
+    cell: ({ row }) => <div>{row.getValue("course").title}</div>,
   },
-  // COURSE
+  // BATCH
   {
-    accessorKey: "course",
+    accessorKey: "batch",
     header: ({ column }) => (
       <Button
         variant="ghost"
         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
       >
-        Course
+        Batch
         <ArrowUpDown className="ml-2 h-4 w-4" />
       </Button>
     ),
-    cell: ({ row }) => <div>{row.getValue("course")?.title}</div>,
-    filterFn: (row, columnId, filterValue) =>
-      row
-        .getValue(columnId)
-        ?.title.toLowerCase()
-        .includes(filterValue.toLowerCase()),
+    cell: ({ row }) => <div>{row.getValue("batch")?.title}</div>,
   },
   // STATUS COL
   {
@@ -99,11 +94,21 @@ export const columns = [
       <div className="capitalize">{row.getValue("status")}</div>
     ),
   },
-  // DESCRIPTION COL
+  // START DATE
   {
-    accessorKey: "description",
-    header: "description",
-    cell: ({ row }) => <div>{row.getValue("description")}</div>,
+    accessorKey: "startDate",
+    header: "Start Date",
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("startDate")}</div>
+    ),
+  },
+  // END DATE
+  {
+    accessorKey: "endDate",
+    header: "End Date",
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("endDate")}</div>
+    ),
   },
 
   // DROPDOWN ACTIONS
@@ -112,7 +117,6 @@ export const columns = [
     enableHiding: false,
     cell: ({ row }) => {
       const batch = row.original;
-
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -138,8 +142,8 @@ export const columns = [
   },
 ];
 
-// BatchesTable component
-export function BatchesTable({ data }) {
+// AdmissionsTable component
+export function AdmissionsTable({ data }) {
   const [sorting, setSorting] = useState([]);
   const [columnFilters, setColumnFilters] = useState([]);
   const [columnVisibility, setColumnVisibility] = useState({});
@@ -168,7 +172,7 @@ export function BatchesTable({ data }) {
     <div className="w-full">
       <div className="flex items-center py-4">
         <Input
-          placeholder="Filter by Course Name..."
+          placeholder="Filter by Batch Name..."
           value={table.getColumn("course")?.getFilterValue() ?? ""}
           onChange={(event) =>
             table.getColumn("course")?.setFilterValue(event.target.value)

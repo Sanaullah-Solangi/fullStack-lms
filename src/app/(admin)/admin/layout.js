@@ -21,6 +21,14 @@ export default function Layout({ children }) {
             Dashboard
           </TabsTrigger>
         </Link>
+        <Link href={"/admin/admissions"}>
+          <TabsTrigger
+            className="py-4 px-6 uppercase font-mono font-semibold border-r border-gray-500"
+            value="admissions"
+          >
+            Admissions
+          </TabsTrigger>
+        </Link>
         <Link href={"/admin/courses"}>
           <TabsTrigger
             className="py-4 px-6 uppercase font-mono font-semibold border-r border-gray-500"
@@ -56,6 +64,7 @@ export default function Layout({ children }) {
       </TabsList>
       <TabsContent value="admin">{children}</TabsContent>
       <TabsContent value="dashboard">{children}</TabsContent>
+      <TabsContent value="admissions">{children}</TabsContent>
       <TabsContent value="trainers">{children}</TabsContent>
       <TabsContent value="courses">{children}</TabsContent>
       <TabsContent value="batches">{children}</TabsContent>
