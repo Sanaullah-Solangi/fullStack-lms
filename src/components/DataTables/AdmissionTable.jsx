@@ -71,6 +71,11 @@ export const columns = [
       </Button>
     ),
     cell: ({ row }) => <div>{row.getValue("course").title}</div>,
+    filterFn: (row, columnId, filterValue) =>
+      row
+        .getValue(columnId)
+        ?.title.toLowerCase()
+        .includes(filterValue.toLowerCase()),
   },
   // BATCH
   {
