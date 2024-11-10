@@ -44,7 +44,7 @@ export function AdmissionDialog({ courses, batches }) {
           <DialogHeader>
             <DialogTitle>Add Batch</DialogTitle>
           </DialogHeader>
-          <BatchForm courses={courses} batches={batches} setState={setOpen} />
+          <AdmissionForm courses={courses} batches={batches} setState={setOpen} />
         </DialogContent>
       </Dialog>
     );
@@ -59,7 +59,7 @@ export function AdmissionDialog({ courses, batches }) {
         <DrawerHeader className="text-left">
           <DrawerTitle>Add Batch</DrawerTitle>
         </DrawerHeader>
-        <BatchForm className="px-4" />
+        <AdmissionForm className="px-4" />
         <DrawerFooter className="pt-2">
           <DrawerClose asChild>
             <Button variant="outline">Cancel</Button>
@@ -70,7 +70,7 @@ export function AdmissionDialog({ courses, batches }) {
   );
 }
 
-function BatchForm({ className, courses, batches, setState }) {
+function AdmissionForm({ className, courses, batches, setState }) {
   const [chosenCourse, setChosenCourse] = useState("");
   return (
     <form

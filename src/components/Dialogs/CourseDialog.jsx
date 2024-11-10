@@ -51,7 +51,7 @@ export function CourseDialog() {
               Add New Course From here. Click Add when you're done.
             </DialogDescription>
           </DialogHeader>
-          <ProfileForm />
+          <CourseForm />
         </DialogContent>
       </Dialog>
     );
@@ -69,7 +69,7 @@ export function CourseDialog() {
             Add New Course From here. Click Add when you're done.
           </DrawerDescription>
         </DrawerHeader>
-        <ProfileForm className="px-4" />
+        <CourseForm className="px-4" />
         <DrawerFooter className="pt-2">
           <DrawerClose asChild>
             <Button variant="outline">Cancel</Button>
@@ -80,7 +80,7 @@ export function CourseDialog() {
   );
 }
 
-function ProfileForm({ className }) {
+function CourseForm({ className }) {
   return (
     <form
       action={addCourse}

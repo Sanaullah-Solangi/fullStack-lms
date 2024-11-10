@@ -7,6 +7,17 @@ import { userModel } from "@/lib/Models/UserModel";
 export async function POST(request) {
   await connectDB();
   const obj = await request.json();
+  const checkApplication = ApplicationModel.find({
+    admission: obj.admission._id,
+    user: obj.user._id,
+  });
+  if (checkApplication) {
+    return Response.json({
+      error: true,
+      msg: "You have already applied in this course",
+    });
+  }
+
   let newApplication = new ApplicationModel({ ...obj });
   newApplication = await newApplication.save();
 

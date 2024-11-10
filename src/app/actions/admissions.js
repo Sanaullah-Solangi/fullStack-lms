@@ -20,7 +20,7 @@ export async function addAdmission(formData) {
 }
 
 export async function updateAdmission(id, status) {
-  const admission = await fetch(`http://localhost:3000/api/admissions`, {
+  const admission = await fetch(`${process.env.BASE_URL}api/admissions`, {
     method: "PUT",
     body: JSON.stringify({ id, status }),
   });
