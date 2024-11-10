@@ -19,8 +19,21 @@ export async function addAdmission(formData) {
   }
 }
 
-export async function getAdmissions() {
-  let admissions = await fetch(`${process.env.BASE_URL}api/admissions`);
+export async function updateAdmission(id, status) {
+  const admission = await fetch(`http://localhost:3000/api/admissions`, {
+    method: "PUT",
+    body: JSON.stringify({ id, status }),
+  });
+  if (admission.ok) {
+    revalidatePath("/admin/admissions");
+    return admission.ok;
+  }
+}
+
+export async function getAdmissions(status = "") {
+  let admissions = await fetch(
+    `${process.env.BASE_URL}api/admissions?status=${status}`
+  );
   admissions = await admissions.json();
   return admissions;
 }

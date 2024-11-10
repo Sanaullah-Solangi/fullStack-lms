@@ -32,7 +32,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       },
       authorize: async (credentials) => {
         let user = null;
-        console.log("credentials cheking=>", credentials);
         let res = await fetch(
           `https://full-stack-lms-nine.vercel.app/api/user/login`,
           {
@@ -46,7 +45,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         res = await res.json();
         user = res.user;
         if (user) {
-          console.log("user checking =>", user);
           return user;
         } else {
         }
@@ -55,8 +53,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   ],
   callbacks: {
     async signIn({ account, profile }) {
-      console.log("account=>", account);
-      console.log("profile=>", profile);
       if (account.provider === "google") {
         const user = await handleLoginUser(profile);
       }
@@ -81,7 +77,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         name: token.name,
         email: token.email,
       };
-      console.log(session);
       return session;
     },
   },

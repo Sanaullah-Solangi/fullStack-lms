@@ -2,18 +2,6 @@ import { connectDB } from "@/lib/dbConnect";
 import { AdmissionModel } from "@/lib/Models/AdmissionModel";
 import { BatchModel } from "@/lib/Models/BatchModel";
 import { CourseModel } from "@/lib/Models/CourseModel";
-export async function POST(request) {
-  await connectDB();
-  const obj = await request.json();
-  let newAdmission = new AdmissionModel({ ...obj });
-  newAdmission = await newAdmission.save();
-
-  return Response.json({
-    error: false,
-    msg: "Admission Is Added Successfully",
-    Admission: newAdmission,
-  });
-}
 
 export async function GET(req) {
   await connectDB();
@@ -39,5 +27,33 @@ export async function GET(req) {
     error: false,
     msg: "Admissions Are Fetched Successfully",
     admissions,
+  });
+}
+
+export async function POST(request) {
+  await connectDB();
+  const obj = await request.json();
+  let newAdmission = new AdmissionModel({ ...obj });
+  newAdmission = await newAdmission.save();
+
+  return Response.json({
+    error: false,
+    msg: "Admission Is Added Successfully",
+    Admission: newAdmission,
+  });
+}
+
+export async function PUT(request) {
+  await connectDB();
+  const obj = await request.json();
+  const { id, status } = obj;
+  const updated = await AdmissionModel.findOneAndUpdate(
+    { _id: id },
+    { status: status }
+  );
+  return Response.json({
+    error: false,
+    msg: "Admission is updated successfully",
+    admission: updated,
   });
 }

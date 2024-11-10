@@ -1,7 +1,17 @@
 "use client";
 
 import * as React from "react";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
 import {
   flexRender,
   getCoreRowModel,
@@ -32,9 +42,12 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { updateAdmission } from "@/app/actions/admissions";
+import { useLoader } from "@/app/context/LoaderContext";
+import Loader from "../Loader/Loader";
 
 // Define columns
-export const columns = [
+export const createColumns = (hideLoader, showLoader) => [
   // STATUS COL
   {
     id: "select",
@@ -122,26 +135,33 @@ export const columns = [
     enableHiding: false,
     cell: ({ row }) => {
       const batch = row.original;
+
       return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(batch.id)}
-            >
-              Copy Batch Name
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>See Details</DropdownMenuItem>
-            <DropdownMenuItem>Change Status</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <Select
+          onValueChange={async (value) => {
+            showLoader();
+            const response = await updateAdmission(row.original._id, value);
+            hideLoader();
+          }}
+        >
+          <SelectTrigger className="w-full">
+            <SelectValue placeholder="Select Status" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              {/* <SelectLabel></SelectLabel> */}
+              <SelectItem className="font-bold" value="open">
+                Open
+              </SelectItem>
+              <SelectItem className="font-bold" value="close">
+                Close
+              </SelectItem>
+              <SelectItem className="font-bold" value="pending">
+                Pending
+              </SelectItem>
+            </SelectGroup>
+          </SelectContent>
+        </Select>
       );
     },
   },
@@ -153,7 +173,9 @@ export function AdmissionsTable({ data }) {
   const [columnFilters, setColumnFilters] = useState([]);
   const [columnVisibility, setColumnVisibility] = useState({});
   const [rowSelection, setRowSelection] = useState({});
+  const { loader, hideLoader, showLoader } = useLoader();
 
+  const columns = createColumns(hideLoader, showLoader);
   const table = useReactTable({
     data,
     columns,
@@ -173,7 +195,9 @@ export function AdmissionsTable({ data }) {
     },
   });
 
-  return (
+  return loader ? (
+    <Loader />
+  ) : (
     <div className="w-full">
       <div className="flex items-center py-4">
         <Input

@@ -21,8 +21,6 @@ export async function GET(req) {
   await connectDB();
   const reqUrl = req.url;
   const { searchParams } = new URL(reqUrl);
-  console.log("========================================================");
-  console.log(reqUrl);
   let query = {};
   if (searchParams.get("course")) {
     query.course = searchParams.get("course");
@@ -33,11 +31,10 @@ export async function GET(req) {
   if (searchParams.get("admission")) {
     query.admission = searchParams.get("admission");
   }
-  // if (searchParams.get("user")) {
-  //   query.user = searchParams.get("user");
-  // }
+  if (searchParams.get("user")) {
+    query.user = searchParams.get("user");
+  }
 
-  console.log("it is the query=>", query);
   const applications = await ApplicationModel.find(query)
     .populate("course", "title")
     .populate("batch", "title")

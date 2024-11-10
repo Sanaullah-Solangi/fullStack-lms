@@ -1,7 +1,11 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Link from "next/link";
+import { auth } from "../../../../auth";
+import { redirect } from "next/navigation";
 
-export default function Layout({ children }) {
+export default async function Layout({ children }) {
+  const session = await auth();
+  if (session?.role != "admin") redirect("/");
   return (
     <Tabs defaultValue="admin" className="w-full">
       <TabsList className="w-full flex justify-center p-0 border-b border-gray-500 bg-purple-200">

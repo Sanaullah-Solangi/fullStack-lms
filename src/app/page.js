@@ -1,7 +1,11 @@
-import Image from "next/image";
+import CourseSection from "@/components/CourseSection/CourseSection";
 import Link from "next/link";
+import { getAdmissions } from "./actions/admissions";
+import { auth } from "../../auth";
+export default async function Home() {
+  const { admissions } = await getAdmissions("open");
+  const session = await auth();
 
-export default function Home() {
   return (
     <div className="h-screen w-screen flex flex-col items-center justify-center gap-2">
       <h1 className="text-5xl font-medium font-mono">HOME</h1>
@@ -11,6 +15,7 @@ export default function Home() {
       >
         click here to go to the admin page
       </Link>
+      <CourseSection admissions={admissions} />
     </div>
   );
 }
