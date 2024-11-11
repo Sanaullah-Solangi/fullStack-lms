@@ -7,9 +7,9 @@ import { userModel } from "@/lib/Models/UserModel";
 export async function POST(request) {
   await connectDB();
   const obj = await request.json();
-  const checkApplication = ApplicationModel.find({
-    admission: obj.admission._id,
-    user: obj.user._id,
+  const checkApplication = await ApplicationModel.findOne({
+    admission: obj.admission,
+    user: obj.user,
   });
   if (checkApplication) {
     return Response.json({

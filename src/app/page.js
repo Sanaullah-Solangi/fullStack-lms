@@ -5,7 +5,6 @@ import { auth } from "../../auth";
 export default async function Home() {
   const { admissions } = await getAdmissions("open");
   const session = await auth();
-  console.log(session);
   return (
     <div className="h-screen w-screen flex flex-col items-center justify-center gap-2">
       <h1 className="text-5xl font-medium font-mono">HOME</h1>

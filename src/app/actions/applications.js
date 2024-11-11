@@ -6,9 +6,10 @@ export async function addApplication(obj) {
   const application = await fetch(`${process.env.BASE_URL}api/applications`, {
     method: "POST",
     body: JSON.stringify(obj),
+    cache: "no-cache",
   });
-  
 
+  console.log("bhai yhan to theak hai", obj);
   if (application.ok) {
     revalidatePath("/admin/applications");
   }

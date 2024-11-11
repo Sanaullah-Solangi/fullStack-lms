@@ -99,13 +99,12 @@ function ApplicationForm({ admission, session, setState }) {
       course: admission.course._id,
       batch: admission.batch._id,
       admission: admission._id,
-      session: session.id,
+      user: session.id,
       info: {
         ...values,
       },
     };
     const submitApplication = await addApplication(obj);
-    console.log("obj=>", obj);
     setState(false);
   }
 
