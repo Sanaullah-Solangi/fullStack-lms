@@ -26,10 +26,16 @@ export async function updateApplication(id, status) {
   }
 }
 
-export async function getAdmissions(status = "") {
-  let admissions = await fetch(
-    `${process.env.BASE_URL}api/admissions?status=${status}`
+export async function getApplications({
+  course = "",
+  batch = "",
+  admission = "",
+  user = "",
+}) {
+  console.log("user id in action", user);
+  let applications = await fetch(
+    `${process.env.BASE_URL}api/applications?course=${course}&batch=${batch}&admission=${admission}&user=${user}`
   );
-  admissions = await admissions.json();
-  return admissions;
+  applications = await applications.json();
+  return applications;
 }

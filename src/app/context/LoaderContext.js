@@ -11,7 +11,7 @@ export default function LoaderContextProvider({ children }) {
   };
   const hideLoader = () => {
     setLoader(false);
-    console.log("showLoader at context=>", loader);
+    console.log("hideLoader at context=>", loader);
   };
   return (
     <LoaderContext.Provider

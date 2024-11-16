@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 export default async function Courses() {
   const { courses } = await getCourse();
   return (
-    <div className="container h-screen w-full flex flex-col items-center justify-center gap-2">
+    <div className="container w-full flex flex-col items-center justify-center gap-2">
       <div className="flex justify-between w-full">
         <h1 className="text-5xl uppercase font-medium font-mono">Courses</h1>
         <CourseDialog />

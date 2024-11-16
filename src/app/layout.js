@@ -20,6 +20,7 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+  
   return (
     <LoaderContextProvider>
       <html lang="en">
@@ -27,7 +28,7 @@ export default function RootLayout({ children }) {
           className={`${geistSans.variable} ${geistMono.variable} antialiased font-mono`}
         >
           <Header />
-          {children}
+          <div>{children}</div>
         </body>
       </html>
     </LoaderContextProvider>

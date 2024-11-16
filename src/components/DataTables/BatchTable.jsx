@@ -32,9 +32,12 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { useLoader } from "@/app/context/LoaderContext";
+import Loader from "../Loader/Loader";
+import { BatchDialog } from "../Dialogs/BatchDialog";
 
 // Define columns
-export const columns = [
+export const createColumns = (hideLoader, showLoader) => [
   // STATUS COL
   {
     id: "select",
@@ -114,6 +117,7 @@ export const columns = [
       const batch = row.original;
 
       return (
+        // <BatchDialog title={"update Batch"} />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" className="h-8 w-8 p-0">
@@ -124,9 +128,11 @@ export const columns = [
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(batch.id)}
+              onClick={() => {
+                navigator.clipboard.writeText(batch.id);
+              }}
             >
-              Copy Batch Name
+              <BatchDialog title={"update Batch"} />
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem>See Details</DropdownMenuItem>
@@ -144,7 +150,8 @@ export function BatchesTable({ data }) {
   const [columnFilters, setColumnFilters] = useState([]);
   const [columnVisibility, setColumnVisibility] = useState({});
   const [rowSelection, setRowSelection] = useState({});
-
+  const { loader, showLoader, hideLoader } = useLoader();
+  const columns = createColumns(hideLoader, showLoader);
   const table = useReactTable({
     data,
     columns,
@@ -164,7 +171,9 @@ export function BatchesTable({ data }) {
     },
   });
 
-  return (
+  return loader ? (
+    <Loader />
+  ) : (
     <div className="w-full">
       <div className="flex items-center py-4">
         <Input

@@ -20,7 +20,14 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react";
+import {
+  ArrowUpDown,
+  ChevronDown,
+  EyeClosed,
+  EyeClosedIcon,
+  EyeOffIcon,
+  MoreHorizontal,
+} from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -45,6 +52,8 @@ import {
 import { updateAdmission } from "@/app/actions/admissions";
 import { useLoader } from "@/app/context/LoaderContext";
 import Loader from "../Loader/Loader";
+import { EyeOpenIcon } from "@radix-ui/react-icons";
+import Link from "next/link";
 
 // Define columns
 export const createColumns = (hideLoader, showLoader) => [
@@ -137,31 +146,36 @@ export const createColumns = (hideLoader, showLoader) => [
       const batch = row.original;
 
       return (
-        <Select
-          onValueChange={async (value) => {
-            showLoader();
-            const response = await updateAdmission(row.original._id, value);
-            hideLoader();
-          }}
-        >
-          <SelectTrigger className="w-full">
-            <SelectValue placeholder="Select Status" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              {/* <SelectLabel></SelectLabel> */}
-              <SelectItem className="font-bold" value="open">
-                Open
-              </SelectItem>
-              <SelectItem className="font-bold" value="close">
-                Close
-              </SelectItem>
-              <SelectItem className="font-bold" value="pending">
-                Pending
-              </SelectItem>
-            </SelectGroup>
-          </SelectContent>
-        </Select>
+        <div className="flex justify-center items-center gap-2">
+          <Link href={`/admin/admissions/${row.original._id}`}>
+            <EyeOpenIcon fontSize={"50px"} className=" font-bold" />
+          </Link>
+          <Select
+            onValueChange={async (value) => {
+              showLoader();
+              const response = await updateAdmission(row.original._id, value);
+              hideLoader();
+            }}
+          >
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="Select Status" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                {/* <SelectLabel></SelectLabel> */}
+                <SelectItem className="font-bold" value="open">
+                  Open
+                </SelectItem>
+                <SelectItem className="font-bold" value="close">
+                  Close
+                </SelectItem>
+                <SelectItem className="font-bold" value="pending">
+                  Pending
+                </SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+        </div>
       );
     },
   },
@@ -196,7 +210,7 @@ export function AdmissionsTable({ data }) {
   });
 
   return loader ? (
-    <Loader />
+    <Loader label={"Updating Status...."} />
   ) : (
     <div className="w-full">
       <div className="flex items-center py-4">

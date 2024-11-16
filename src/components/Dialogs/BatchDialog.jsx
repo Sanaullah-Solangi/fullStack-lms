@@ -30,7 +30,7 @@ import {
 } from "@/components/ui/select";
 import { addBatche } from "@/app/actions/batches";
 
-export function BatchDialog({ courses }) {
+export function BatchDialog({ title, courses }) {
   const [open, setOpen] = useState(false);
   const isDesktop = true;
 
@@ -38,11 +38,11 @@ export function BatchDialog({ courses }) {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Button variant="outline">Add Batch</Button>
+          <Button variant="outline">{`${title ? title : "Add Batch"}`}</Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle>Add Batch</DialogTitle>
+            <DialogTitle>{`${title ? title : "Add Batch"}`}</DialogTitle>
           </DialogHeader>
           <BatchForm courses={courses} state={open} setState={setOpen} />
         </DialogContent>
@@ -53,11 +53,11 @@ export function BatchDialog({ courses }) {
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
-        <Button variant="outline">Add Batch</Button>
+        <Button variant="outline">{`${title ? title : "Add Batch"}`}</Button>
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader className="text-left">
-          <DrawerTitle>Add Batch</DrawerTitle>
+          <DrawerTitle>{`${title ? title : "Add Batch"}`}</DrawerTitle>
         </DrawerHeader>
         <BatchForm className="px-4" />
         <DrawerFooter className="pt-2">

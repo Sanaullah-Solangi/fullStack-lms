@@ -33,6 +33,9 @@ import {
 } from "@/components/ui/drawer";
 import { Input } from "@/components/ui/input";
 import { addApplication } from "@/app/actions/applications";
+import MyButton from "../MyButton/MyButton";
+import { useLoader } from "@/app/context/LoaderContext";
+import Loader from "../Loader/Loader";
 
 const formSchema = z.object({
   CNIC: z.string().min(10),
@@ -43,21 +46,28 @@ const formSchema = z.object({
 export function ApplicationDialog({ admission, session }) {
   const [open, setOpen] = useState(false);
   const isDesktop = true;
+  const { loader, showLoader, hideLoader } = useLoader();
 
   if (isDesktop) {
-    return (
+    return loader ? (
+      <Loader label={"Applying for Course..."} />
+    ) : (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Button variant="outline">Add Batch</Button>
+          <Button variant="outline">
+            <MyButton text={"Apply Now"} />
+          </Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle>Add Batch</DialogTitle>
+            <DialogTitle>Apply Here</DialogTitle>
           </DialogHeader>
           <ApplicationForm
             admission={admission}
             session={session}
             setState={setOpen}
+            showLoader={showLoader}
+            hideLoader={hideLoader}
           />
         </DialogContent>
       </Dialog>
@@ -67,11 +77,11 @@ export function ApplicationDialog({ admission, session }) {
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
-        <Button variant="outline">Add Batch</Button>
+        <Button variant="outline">Apply</Button>
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader className="text-left">
-          <DrawerTitle>Add Batch</DrawerTitle>
+          <DrawerTitle>Apply Here</DrawerTitle>
         </DrawerHeader>
         <ApplicationForm className="px-4" />
         <DrawerFooter className="pt-2">
@@ -84,7 +94,13 @@ export function ApplicationDialog({ admission, session }) {
   );
 }
 
-function ApplicationForm({ admission, session, setState }) {
+function ApplicationForm({
+  admission,
+  session,
+  setState,
+  showLoader,
+  hideLoader,
+}) {
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -95,6 +111,7 @@ function ApplicationForm({ admission, session, setState }) {
   });
 
   async function onSubmit(values) {
+    showLoader();
     const obj = {
       course: admission.course._id,
       batch: admission.batch._id,
@@ -106,6 +123,7 @@ function ApplicationForm({ admission, session, setState }) {
     };
     const submitApplication = await addApplication(obj);
     setState(false);
+    hideLoader();
   }
 
   return (

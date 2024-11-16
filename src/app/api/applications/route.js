@@ -57,3 +57,7 @@ export async function GET(req) {
     applications,
   });
 }
+
+export async function PUT(request) {
+  
+}

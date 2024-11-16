@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -29,22 +29,34 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { addAdmission } from "@/app/actions/admissions";
+import Loader from "../Loader/Loader";
 
 export function AdmissionDialog({ courses, batches }) {
   const [open, setOpen] = useState(false);
-  const isDesktop = true;
+  const [loader, setLoader] = useState(false);
 
+  const isDesktop = true;
   if (isDesktop) {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Button variant="outline">Add Batch</Button>
+          <Button variant="outline">Open Admissions</Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle>Add Batch</DialogTitle>
+            <DialogTitle>Add Admission</DialogTitle>
           </DialogHeader>
-          <AdmissionForm courses={courses} batches={batches} setState={setOpen} />
+          {loader ? (
+            <Loader />
+          ) : (
+            <AdmissionForm
+              courses={courses}
+              batches={batches}
+              setState={setOpen}
+              loader={loader}
+              setLoader={setLoader}
+            />
+          )}
         </DialogContent>
       </Dialog>
     );
@@ -53,11 +65,11 @@ export function AdmissionDialog({ courses, batches }) {
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
-        <Button variant="outline">Add Batch</Button>
+        <Button variant="outline">Open Admission</Button>
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader className="text-left">
-          <DrawerTitle>Add Batch</DrawerTitle>
+          <DrawerTitle>Open Admission</DrawerTitle>
         </DrawerHeader>
         <AdmissionForm className="px-4" />
         <DrawerFooter className="pt-2">
@@ -70,13 +82,21 @@ export function AdmissionDialog({ courses, batches }) {
   );
 }
 
-function AdmissionForm({ className, courses, batches, setState }) {
+function AdmissionForm({ className, courses, batches, setState, setLoader }) {
   const [chosenCourse, setChosenCourse] = useState("");
+
   return (
     <form
-      action={(formData) => {
-        setState(false);
-        addAdmission(formData);
+      action={async (formData) => {
+        setLoader(true);
+        try {
+          await addAdmission(formData);
+        } catch (error) {
+          console.log(error);
+        } finally {
+          setState(false);
+          setLoader(false);
+        }
       }}
       className={cn("grid items-start gap-4", className)}
     >

@@ -6,7 +6,7 @@ export default async function Home() {
   const { admissions } = await getAdmissions("open");
   const session = await auth();
   return (
-    <div className="h-screen w-screen flex flex-col items-center justify-center gap-2">
+    <div className="w-screen flex flex-col items-center justify-center gap-2 mt-10">
       <h1 className="text-5xl font-medium font-mono">HOME</h1>
       <Link
         href={"/admin"}

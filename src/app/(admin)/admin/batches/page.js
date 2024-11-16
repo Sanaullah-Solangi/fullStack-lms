@@ -7,7 +7,7 @@ export default async function Batches() {
   const { batches } = await getBatches();
   const { courses } = await getCourse();
   return (
-    <div className="container h-screen w-screen flex flex-col items-center justify-center gap-2">
+    <div className="container w-screen flex flex-col items-center justify-center gap-2">
       <div className="flex justify-between w-full">
         <h1 className="text-5xl uppercase font-medium font-mono">Batches</h1>
         <BatchDialog courses={courses} />

@@ -11,6 +11,7 @@ import {
 import { Button } from "../ui/button";
 import Link from "next/link";
 import { ApplicationDialog } from "../Dialogs/ApplicationDialog";
+import MyButton from "../MyButton/MyButton";
 export function CourseSection({ admissions, session }) {
   return (
     <section className="container mx-auto my-10 ">
@@ -33,9 +34,7 @@ export function CourseSection({ admissions, session }) {
                   <ApplicationDialog session={session} admission={admission} />
                 ) : (
                   <Link href={"/signin"}>
-                    <span className="text-xl text-white py-2 px-4 rounded font-mono bg-blue-500">
-                      Sign in to Apply
-                    </span>
+                    <MyButton text={"Sign in to Apply"} />
                   </Link>
                 )}
               </CardFooter>
