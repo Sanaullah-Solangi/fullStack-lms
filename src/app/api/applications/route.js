@@ -59,5 +59,16 @@ export async function GET(req) {
 }
 
 export async function PUT(request) {
-  
+  await connectDB();
+  const { id, status } = await request.json();
+
+  const updated = await ApplicationModel.findOneAndUpdate(
+    { _id: id },
+    { status }
+  ).exec();
+  return Response.json({
+    error: false,
+    msg: "Application Status Is Updated",
+    application: updated,
+  });
 }

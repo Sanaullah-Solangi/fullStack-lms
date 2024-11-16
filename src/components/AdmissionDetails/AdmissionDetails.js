@@ -11,7 +11,7 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { CalendarIcon, UserIcon } from "lucide-react";
-// import { updateApplication } from "@/actions/application";
+import { updateApplication } from "@/app/actions/applications";
 
 export default function AdmissionDetails({ admission }) {
   const handleEnroll = async (applicationId) => {
@@ -78,7 +78,7 @@ export default function AdmissionDetails({ admission }) {
                     src={application?.user?.profileImg}
                     alt={application?.user?.fullName || "User Avatar"}
                   />
-                  <AvatarFallback className="uppercase">
+                  <AvatarFallback className="uppercase font-bold text-2xl">
                     {application?.user?.fullName?.charAt(0) || "?"}
                   </AvatarFallback>
                 </Avatar>

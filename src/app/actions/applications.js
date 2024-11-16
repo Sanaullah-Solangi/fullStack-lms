@@ -9,7 +9,6 @@ export async function addApplication(obj) {
     cache: "no-cache",
   });
 
-  console.log("bhai yhan to theak hai", obj);
   if (application.ok) {
     revalidatePath("/admin/applications");
   }

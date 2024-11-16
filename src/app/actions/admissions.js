@@ -40,7 +40,7 @@ export async function getAdmissions(status = "") {
 
 export async function getSingalAdmission(id) {
   console.log("Signal Admission lata hun");
-  let admission = await fetch(`http://localhost:3000/api/admissions/${id}`);
+  let admission = await fetch(`${process.env.BASE_URL}api/admissions/${id}`);
   admission = await admission.json();
   return admission;
 }

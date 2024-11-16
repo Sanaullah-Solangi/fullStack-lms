@@ -21,16 +21,16 @@ export default function ApplicationCard({ application }) {
           <div className="flex items-center space-x-4">
             <Avatar className="h-16 w-16">
               <AvatarImage
-                src={application?.user?.profileImg}
-                alt={application?.user?.fullname}
+                src={application.user.profileImg}
+                alt={application?.user?.fullName}
               />
-              <AvatarFallback>
-                {application?.user?.fullname?.charAt(0)}
+              <AvatarFallback className="uppercase font-bold text-3xl">
+                {application?.user?.fullName?.charAt(0)}
               </AvatarFallback>
             </Avatar>
             <div>
               <h3 className="text-lg font-semibold">
-                {application?.user?.fullname}
+                {application?.user?.fullName}
               </h3>
               <p className="text-sm text-muted-foreground">
                 {application?.user?.email}
